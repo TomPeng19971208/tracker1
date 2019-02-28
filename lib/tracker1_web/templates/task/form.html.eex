@@ -24,6 +24,12 @@
   </div>
 
   <div class="form-group">
+    <%= label f, :finished, class: "control-label" %>
+    <%= checkbox f, :finished, class: "form-control", id: "finish_box"%>
+    <%= error_tag f, :finished %>
+  </div>
+
+  <div class="form-group">
     <%= label f, :user_id %>
     <%= select f, :user_id, Enum.map(@users, fn u -> {u.name, u.id} end) %>
     <%= error_tag f, :user_id %>

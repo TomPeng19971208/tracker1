@@ -33,7 +33,6 @@ defmodule Tracker1Web.TaskController do
 
   def show(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
-    IO.inspect(task)
     render(conn, "show.html", task: task)
   end
 
@@ -57,6 +56,7 @@ defmodule Tracker1Web.TaskController do
         render(conn, "edit.html", task: task, changeset: changeset)
     end
   end
+
 
   def delete(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)

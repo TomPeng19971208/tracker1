@@ -1,7 +1,8 @@
-<h2>Listing Tasks</h2>
+<h2>All Tasks</h2>
 <div id="main" class="row">
 <div class="col">
 <table class="table">
+  <caption><%= link "Create a New Task", to: Routes.task_path(@conn, :new) %></caption>
   <thead>
     <tr>
       <th>Title</th>
@@ -33,33 +34,9 @@
 <div>
 
 <!-- start of rwo 2 -->
-<div class="row">
-  <!-- table for unfinished tasks-->
-  <div class="col-4 mr-auto">
-  <h3>Finished</h3>
-  <table class="table">
-    <thead>
-      <tr>
-       <th>Title</th>
-       <th>Description</th>
-       <th>Time</th>
-      </tr>
-   </thead>
-   <tbody>
-     <%= for task <- @tasks do %>
-      <%= if @current_user.id == task.user.id and task.finished do %>
-        <tr>
-          <td><%= task.title %></td>
-          <td><%= task.description %></td>
-          <td><%= task.time %></td>
-       </tr>
-     <% end %>
-     <% end %>
-   </tbody>
-  </table>
-</div>
-  <!-- table for finished tasks-->
-  <div class="col-5 ml-auto border">
+<div class="row justify-content-around">
+  <!-- table for ongoing tasks-->
+  <div class="col border">
   <h3>Ongoing...</h3>
   <table class="table">
     <thead>
@@ -67,6 +44,7 @@
        <th>Title</th>
        <th>Description</th>
        <th>Time</th>
+       <th>Options</th>
       </tr>
    </thead>
    <tbody>
@@ -76,6 +54,35 @@
           <td><%= task.title %></td>
           <td><%= task.description %></td>
           <td><%= task.time %></td>
+          <td><span><%= link "Detail", to: Routes.task_path(@conn, :show, task), class: "btn btn-default btn-xs" %></span></td>
+          <td><span><%= link "Finish", to: Routes.task_path(@conn, :edit, task), class: "btn btn-default btn-xs" %></span></td>
+       </tr>
+     <% end %>
+     <% end %>
+   </tbody>
+  </table>
+</div>
+  <!-- table for finished tasks-->
+  <div class="col border">
+  <h3>Finished...</h3>
+  <table class="table">
+    <thead>
+      <tr>
+       <th>Title</th>
+       <th>Description</th>
+       <th>Time</th>
+       <th>Option</th>
+      </tr>
+   </thead>
+   <tbody>
+     <%= for task <- @tasks do %>
+      <%= if @current_user.id == task.user.id and task.finished do %>
+        <tr>
+          <td><%= task.title %></td>
+          <td><%= task.description %></td>
+          <td><%= task.time %></td>
+          <td><span><%= link "Detail", to: Routes.task_path(@conn, :show, task), class: "btn btn-default btn-xs" %></span></td>
+          <td><span><%= link "Delete", to: Routes.task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span></td>
        </tr>
      <% end %>
      <% end %>
@@ -85,5 +92,4 @@
 <!--end of row 2-->
 </div>
 
-<span><%= link "New Task", to: Routes.task_path(@conn, :new) %></span>
 </div>
