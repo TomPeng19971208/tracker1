@@ -1,5 +1,5 @@
 use Mix.Config
-
+import_config "./prod.secret.exs"
 # For production, don't forget to configure the url host
 # to something meaningful, Phoenix uses this information
 # when generating URLs.
@@ -10,6 +10,9 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :tracker1, Tracker1Web.Endpoint,
+  server: true, 
+  root: ".", 
+  version: Application.spec(:phoenix_distillery, :vsn),
   http: [:inet6, port: System.get_env("PORT")],
   url: [host: "task1.zy-peng.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
@@ -68,4 +71,17 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs which should be versioned
 # separately.
-import_config "prod.secret.exs"
+
+
+
+
+path = Path.expand("~/.config/prod.secret.exs")
+unless File.exists?(path) do
+  secret = Base.encode16(:crypto.strong_rand_bytes(32))
+  File.write!(path, secret)
+end
+secret = File.read!(path)
+
+config :tracker1, Tracker1Web.Endpoint,
+  secret_key_base: secret
+

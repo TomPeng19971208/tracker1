@@ -71,6 +71,5 @@ config :tracker1, Tracker1.Repo,
   username: "tracker",
   password: "P@ssw0rd",
   database: "tracker1_dev",
-  hostname: "localhost",
-  port: 6432,
+  hostname: "45.63.17.107",
   pool_size: 10
